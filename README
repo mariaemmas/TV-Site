@@ -1,0 +1,36 @@
+Proiect - Etapa 2 - POO TV
+Stan Maria-Emma - Grupa 321CD
+
+Obiectiv:
+	Se doreste implementarea unei platforme pentru vizualizarea de filme si seriale si trebuie implementate functionalitatile standard ale acestei platforme (register, login, logout, search, view movie, rate, subscribe, add/delete movie etc).
+
+Solutie:
+A. Structurarea datelor:
+Datele primite si prelucrate pot fi impartite in trei mari grupe, anume
+	informatii despre utilizatori
+	informatii despre filme
+	informatii despre actiuni
+Pe parcursul rularii aplicatiei datele sunt tinute in doua clase
+	AllData, care contine informatiile citite de la Input
+	CurrentData care memoreaza informatii despre utilizatorul curent, pagina curenta, lista de filme curenta.
+
+B. Pentru rezolvarea cerintelor am utilizat doua pachete aflate in src:
+1. Pachetul "fileio" contine clasele necesare pentru citirea datelor din fisierele de tip JSON.
+2. Pachetul "implement" contine:
+	- Clasa LoadData - punctul de intrare pentru rezolvare, ia fiecare actiune in parte si apeleaza metoda necesara pentru rezolvarea acesteia.
+	- Clasa Page - reprezinta pagina pe care poate sa se afle un utilizator la un moment dat. O pagina are nume (pageName), id (pageId) si un ArrayList de intregi care contine id-urile paginilor pe care utilizatorul se poate duce (nextPages).
+	- Clasa Pages - utilizata in LoadData contine un constructor fara niciun parametru care creaza un ArrayList de Page care contine toate paginile. 
+	- Clasa StandardOutput - apelata de fiecare data cand se doreste afisarea unei erori sau a unei comenzi efectuate cu succes.
+	- Clasa NotificationsOutput - apelata dupa ce se termina rezolvarea actiunilor
+	- Clasa AllData
+	- Clasa CurrentData
+	- Clasa UserMovies - folosita pentru a incarca filmele de la input in obiecte de tip Movies , dar care contine si metode de sortare utilizate la actiunile sort si filter.
+	- Interfata Command - contine metoda execute() care este implementata cu diverse actiuni aflate in pachetul "actions".
+	- pachetul "actions" - contine clase ale caror metode realizeaza atat actiunea "change page" ,cat si actiunile "on page".
+
+
+c. Rezolvarea temei incepe prin incarcarea datelor citite din fisierele de input in obiecte aflate in pachetul "fileio" si crearea ArrayNode-ului output cu ajutorul caruia voi afisa rezultatele obtinute. In Main am apelat metoda load din clasa LoadData. 
+	In LoadData am incarcat datele citite de la input intr-un obiect de tip AllData (pentru a putea fi utilizate cu usurinta in celelalte clase).De asemenea am incarcat in CurrentData informatiile  despre utilizatorul curent, pagina curenta si lista de filme curenta (care se pot modifica dupa executarea actiunilor).
+	Am ales sa utilizez Design Pattern-ul Command pentru a usura crearea si utilizarea de actiuni. Pentru aceasta Invoker-ul este clasa LoadData, Concrete Command sunt clasele din pachetul "implement.actions" si Receiver-ul este clasa CurrentData.
+	Am folosit Design Pattern-ul Builder pentru a crea elementele listei de genuri preferate ale unui utilizator. Clasa Genres se afla in pachetul "implement.actions.recommendation"
+	Am reusit sa rezolv toate cerintele propuse.
